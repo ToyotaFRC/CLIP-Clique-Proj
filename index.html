@@ -1,0 +1,736 @@
+<!-- 
+ This source code is derived from DiffusionNOCS (https://github.com/woven-planet/DiffusionNOCS/tree/gh-pages)
+ Copyright 2024 Toyota Motor Corporation.  All rights reserved. 
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<script src="bootstrap.js"></script>
+<script type="text/javascript" charset="utf-8"
+    src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+<style type="text/css">
+    body {
+        font-family: "Titillium Web", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: 300;
+        font-size: 17px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @media screen and (min-width: 980px) {
+        body {
+            width: 980px;
+        }
+    }
+
+
+    h1 {
+        font-weight: 300;
+        line-height: 1.15em;
+    }
+
+    h2 {
+        font-size: 1.75em;
+    }
+
+    a:link,
+    a:visited {
+        color: #1468b7;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #208799;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    h2,
+    h3 {
+        text-align: left;
+    }
+
+    h1 {
+        font-size: 40px;
+        font-weight: 500;
+    }
+
+    h2 {
+        font-weight: 400;
+        margin: 16px 0px 4px 0px;
+    }
+
+    h3 {
+        font-weight: 600;
+        margin: 16px 0px 4px 0px;
+    }
+
+    .paper-title {
+        padding: 1px 0px 1px 0px;
+    }
+
+    section {
+        margin: 32px 0px 32px 0px;
+        text-align: justify;
+        clear: both;
+    }
+
+    .col-5 {
+        width: 20%;
+        float: left;
+    }
+
+    .move-down {
+        margin-top: 0.6cm;
+    }
+
+    .col-4 {
+        width: 25%;
+        float: left;
+    }
+
+    .col-3 {
+        width: 33%;
+        float: left;
+    }
+
+    .col-2 {
+        width: 50%;
+        float: left;
+    }
+
+    .col-1 {
+        width: 100%;
+        float: left;
+    }
+
+    .col-8 {
+        width: 12.5%;
+    }
+
+    .author-row,
+    .affil-row {
+        font-size: 26px;
+    }
+
+    .author-row-new {
+        text-align: center;
+    }
+
+    .author-row-new a {
+        display: inline-block;
+        font-size: 20px;
+        padding: 4px;
+    }
+
+    .author-row-new sup {
+        color: #313436;
+        font-size: 12px;
+    }
+
+    .affiliations-new {
+        font-size: 18px;
+        text-align: center;
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    .row {
+        margin: 16px 0px 16px 0px;
+    }
+
+    .authors {
+        font-size: 26px;
+    }
+
+    .affiliatons {
+        font-size: 18px;
+    }
+
+    .affil-row {
+        margin-top: 18px;
+    }
+
+    .teaser {
+        max-width: 100%;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .screenshot {
+        width: 256px;
+        border: 1px solid #ddd;
+    }
+
+    .screenshot-el {
+        margin-bottom: 16px;
+    }
+
+    hr {
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #ddd;
+        margin: 0;
+    }
+
+    .material-icons {
+        vertical-align: -6px;
+    }
+
+    p {
+        line-height: 1.25em;
+    }
+
+    .caption {
+        font-size: 16px;
+        color: #666;
+        margin-top: 4px;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+
+    video {
+        display: block;
+        margin: auto;
+    }
+
+
+    figure {
+        display: block;
+        margin: auto;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    #bibtex pre {
+        font-size: 14px;
+        background-color: #eee;
+        padding: 16px;
+    }
+
+    .blue {
+        color: #2c82c9;
+        font-weight: bold;
+    }
+
+    .orange {
+        color: #d35400;
+        font-weight: bold;
+    }
+
+    .flex-row {
+        display: flex;
+        flex-flow: row wrap;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .paper-btn-coming-soon {
+        position: relative;
+        text-align: center;
+
+        display: inline-block;
+        margin: 8px;
+        padding: 8px 8px;
+
+        border-width: 0;
+        outline: none;
+        border-radius: 15px;
+
+        background-color: #838383;
+        color: white !important;
+        font-size: 20px;
+        width: 100px;
+        font-weight: 200;
+    }
+
+    .coming-soon {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+    }
+
+    .center {
+        margin-left: 10.0%;
+        margin-right: 10.0%;
+    }
+
+    .paper-btn {
+        position: relative;
+        text-align: center;
+
+        display: inline-block;
+        margin: 8px;
+        padding: 8px 8px;
+
+        border-width: 0;
+        outline: none;
+        border-radius: 15px;
+
+        background-color: #3e3131;
+        color: white !important;
+        font-size: 20px;
+        width: 100px;
+        font-weight: 200;
+    }
+
+    .paper-btn-parent {
+        display: flex;
+        justify-content: center;
+        margin: 16px 0px;
+    }
+
+    .paper-btn:hover {
+        opacity: 0.85;
+    }
+
+    .container {
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .venue {
+        font-size: 23px;
+    }
+
+    .topnav {
+        background-color: #EEEEEE;
+        overflow: hidden;
+    }
+
+    .topnav div {
+        max-width: 1070px;
+        margin: 0 auto;
+    }
+
+    .topnav a {
+        display: inline-block;
+        color: black;
+        text-align: center;
+        vertical-align: middle;
+        padding: 16px 16px;
+        text-decoration: none;
+        font-size: 18px;
+    }
+
+    .topnav img {
+        padding: 2px 0px;
+        width: 100%;
+        margin: 0.2em 0px 0.3em 0px;
+        vertical-align: middle;
+    }
+
+    pre {
+        font-size: 0.9em;
+        padding-left: 7px;
+        padding-right: 7px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        border-radius: 3px;
+        background-color: rgb(235, 235, 235);
+        overflow-x: auto;
+    }
+
+    .download-thumb {
+        display: flex;
+    }
+
+    @media only screen and (max-width: 620px) {
+        .download-thumb {
+            display: none;
+        }
+    }
+
+    .paper-stuff {
+        width: 50%;
+        font-size: 20px;
+    }
+
+    @media only screen and (max-width: 620px) {
+        .paper-stuff {
+            width: 100%;
+        }
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .column {
+        text-align: center;
+        float: left;
+        width: 16.666%;
+        padding: 5px;
+    }
+
+    .column3 {
+        text-align: center;
+        float: left;
+        width: 33.333%;
+        padding: 5px;
+    }
+
+    .column4 {
+        text-align: center;
+        float: left;
+        width: 50%;
+        padding: 5px;
+    }
+
+    .column5 {
+        text-align: center;
+        float: left;
+        width: 20%;
+        padding: 5px;
+    }
+
+    .column10 {
+        text-align: center;
+        float: left;
+        width: 10%;
+        padding: 5px;
+    }
+
+    .border-right {
+        border-right: 1px solid black;
+    }
+
+    .border-bottom {
+        border-bottom: 1px solid black;
+    }
+
+
+    .row-center {
+        margin: 16px 0px 16px 0px;
+        text-align: center;
+    }
+
+    /* Clearfix (clear floats) */
+    .row::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .figure-img {
+        margin-bottom: 0.5rem;
+        line-height: 1;
+    }
+
+
+
+
+
+
+
+
+    .rounded-circle {
+        border-radius: 50% !important;
+    }
+
+
+
+
+
+
+    /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 500px) {
+        .column {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .column3 {
+            width: 100%;
+        }
+    }
+
+    a[disabled] {
+        pointer-events: none;
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+</style>
+<link rel="stylesheet" href="bootstrap-grid.css">
+<link rel="stylesheet" href="simplegrid.css">
+<!-- Custom CSS for aligning the long- and short-named affiliations horizontally -->
+<link rel="stylesheet" href="affiliations-container.css">
+
+<script type="text/javascript" src="../js/hidebib.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600,400italic,600italic,300,300italic'
+    rel='stylesheet' type='text/css'>
+
+<head>
+    <title>CLIP-Clique: Graph-based Correspondence Matching Augmented by Vision Language Models for Object-based Global
+        Localization</title>
+    <link rel="icon" href="img/X_icon_tokureiban_1.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:description" content="Graph-based correspondence matching using Vision Language Models" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="">
+    <meta name="twitter:title"
+        content="CLIP-Clique: Graph-based Correspondence Matching Augmented by Vision Language Models for Object-based Global Localization">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="paper-title">
+            <h1>CLIP-Clique: Graph-based Correspondence Matching Augmented by Vision Language Models for Object-based
+                Global Localization</h1>
+            <center>IEEE Robotics and Automation Letters, 2024</center>
+        </div>
+
+        <div id="authors">
+            <center>
+                <div class="author-row-new">
+                    <a href="https://www.linkedin.com/in/shigemichi-matsuzaki/">Shigemichi Matsuzaki</a>,
+                    Kazuhito Tanaka,
+                    and <a href="https://ieeexplore.ieee.org/author/952633458310189">Kazuhiro Shintani</a>
+                </div>
+            </center>
+            <center>
+                <!-- Aligning affiliation text horizontally -->
+                <div class="affiliations-texts">
+                    <span class="affiliation-text">Frontier Research Center,<br> Toyota Motor
+                        Corporation</span>
+                </div>
+
+                <!-- Aligning logo image horizontally -->
+                <div class="affiliations-logos">
+                    <a href="https://global.toyota/en/mobility/frontier-research/" target="_blank">
+                        <img src="img/frc-logo-tate.png" alt="FRC Logo" class="affiliation-logo-img">
+                    </a>
+                </div>
+
+                <!--
+                <div class="caption, centered">
+                    <p>
+                        <b>The code is now AVAILABLE!!</b> <br> (Posted on January 2025)
+                    </p>
+                </div>
+                -->
+            </center>
+
+            <div style="clear: both">
+                <div class="paper-btn-parent">
+                    <!-- Paper link -->
+                    <a class="paper-btn" href="https://arxiv.org/abs/2410.03054">
+                        <span class="material-icons"> feed </span>
+                        Paper
+                    </a>
+                    <!-- Code link -->
+                    <a class="paper-btn" href="https://github.com/Toyota/CLIP-Clique" disabled>
+                        <span class="material-icons"> code </span>
+                        Code
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <section id="teaser-image">
+            <center>
+                <figure>
+                    <img src='img/Fig1.png' class='img-fluid'>
+                    <p class="caption">
+                        We propose CLIP-Clique, an object-based RGB-D global localization method driven by a novel
+                        correspondence matching strategy.
+                        It leverages two types of graphs: (i) 3D semantic graph for accurately estimating object
+                        correspondences, and (ii) spatial compatibility graph for efficiently extracting
+                        inlier correspondences as spatially compatible sets. We augment an existing semantic graph-based
+                        method with a Vision Language Model, i.e., CLIP
+                        to enhance landmark discriminability and robustness. We also exploit CLIP-based similarity
+                        estimation in ranking multiple inlier candidates calculated as maximal cliques of the
+                        compatibility graph, and similarity-weighted least squares for accurate pose calculation.
+                    </p>
+                </figure>
+            </center>
+        </section>
+
+        <section id="abstract" />
+        <h2>Abstract</h2>
+        <hr>
+        <div class="flex-row">
+            <p>
+                This letter proposes a method of global localization on a map with semantic object landmarks. One of the
+                most promising approaches for localization on object maps is to use semantic graph matching using
+                landmark descriptors calculated from the distribution of surrounding objects. These descriptors are
+                vulnerable to misclassification and partial observations. Moreover, many existing methods rely on inlier
+                extraction using RANSAC, which is stochastic and sensitive to a high outlier rate. To address the former
+                issue, we augment the correspondence matching using Vision Language Models (VLMs). Landmark
+                discriminability is improved by VLM embeddings, which are independent of surrounding objects. In
+                addition, inliers are estimated deterministically using a graph-theoretic approach. We also incorporate
+                pose calculation using the weighted least squares considering correspondence similarity and observation
+                completeness to improve the robustness. We confirmed improvements in matching and pose estimation
+                accuracy through experiments on ScanNet and TUM datasets.
+            </p>
+        </div>
+        </section>
+
+
+        <div class="section">
+            <h2>Method</h2>
+            <hr>
+            <p> </p>
+            <div class="row align-items-center">
+                <div class="col justify-content-center text-center">
+                    <figure>
+                        <img src='img/Fig_overview.png' class='img-fluid'>
+                        <p class="caption">
+                        </p>
+                    </figure>
+                </div>
+            </div>
+            <h3>1. Hybrid object descriptor using CLIP and semantic graphs</h3>
+            <p> We propose a hybrid object descriptor that combines the advantages of both VLM
+                (<a href="https://arxiv.org/abs/2103.00020">CLIP</a>), and
+                general object detectors via semantic graphs.
+                The CLIP descriptor provides <b>excellent disciminability</b>
+                while semantic graph enjoys <b>robustness </b>of estimation and provides <b>spatial information</b>.
+                By combining these two descriptors, we can achieve a more accurate and robust object descriptor.</p>
+
+            <h3>2. Adaptive initial matching strategy</h3>
+            <p>
+                To extract likely object correspondences, we propose a new strategy
+                to select the adaptive number based on the similarity distribution among the landmarks.
+                Unlike the conventional 1-to-1 matching or top-k matching,
+                the proposed method can handle <b>arbitrary number of possible candidates</b>.
+                It comes at the cost of increasing the outlier ratio,
+                but we can handle it by the robust graph-theoretic inlier extraction.
+            </p>
+
+            <h3>3. Graph-theoretic inlier extraction</h3>
+            <p>We represent the pair-wise consistency among the correspondence candidates
+                as a <i>consistency graph</i>, where each node represents one correspondence
+                and an edge between nodes represent the consistency between the correspondences.
+                Sets of mutually consistent correspondences are extracted as <i>maximal cliques</i> in the graph.
+                This algorithm is <b>robust</b> to outliers and <b>deterministic</b>.
+            </p>
+            <h3>4. Robust pose calculation via weighted least squares</h3>
+            <p>
+                The final sensor pose is calculated via weighted least squares.
+                The weights are calculated based on the <b>similarity </b>of the correspondences the <b>completeness</b>
+                of the observations
+                to mitigate the problem of inaccurate matching and incomplete observations.
+            </p>
+        </div>
+        <br>
+        <div class="section">
+            <h2>Results</h2>
+            <hr>
+            <div class="row align-items-center">
+                <div class="col justify-content-center text-center">
+                    <figure>
+                        <img src='img/table2.png' class='img-fluid'>
+                        <p class="caption">
+                        </p>
+                    </figure>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col justify-content-center text-center">
+                    <figure>
+                        <img src='img/visualization.png' class='img-fluid'>
+                        <p class="caption">
+                            Visualization of the estimation results on TUM fr3/long_office_household. Left: the object
+                            map and the semantic graph. Right: Top-down view of the sample trajectory, estimation
+                            results, and an exclusively successful and failure results compared to the SH [6]. In the
+                            successful case, the graph is way more sparse than the map, which will affect matching based
+                            on SHs. Nevertheless, pose estimation was successful thanks to CLIP-based descriptors. In
+                            the failure case, although there is more connectivity, correspondence matching failed.
+                            Looking at the detection, many observations are small and blurred. This might have affected
+                            the inference accuracy of CLIP, and led to failure.
+                        </p>
+                    </figure>
+                </div>
+            </div>
+
+            <p>More results such as ablations are in the <a href="https://arxiv.org/abs/2410.03054">paper</a>.</p>
+
+        </div>
+
+        <div class="section">
+            <h2>Our Related Projects</h2>
+            <hr>
+            <div class='row vspace-top'>
+                <div class="col-sm-3">
+                    <img src='img/CLIP-Loc.png' class='img-fluid'>
+                </div>
+
+                <div class="col">
+                    <div class='paper-title'>
+                        <a href="https://toyotafrc.github.io/CLIP-Loc-Proj/">CLIP-Loc: Multi-modal Landmark Association
+                            for Global Localization in Object-based Maps</a> [<a
+                            href='https://github.com/Toyota'>code</a>]
+                    </div>
+                    <div>
+                        Our first work using CLIP for object-based global localization.
+                        We proposed using CLIP to estimate correspondences
+                        between image-based object observations and text-labeled map landmarks.
+                        In inlier extraction, we exploited importance sampling-based variance
+                        of RANSAC, namely PROSAC, to improve the robustness and efficiency.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <hr> -->
+
+        <section id="bibtex">
+            <h2>Citation</h2>
+            <hr>
+            <pre><code>@article{Matsuzaki2024RAL,
+    author = {Matsuzaki, Shigemichi and Tanaka, Kazuhito and Shintani, Kazuhiro},
+    doi = {10.1109/LRA.2024.3474482},
+    issn = {2377-3766},
+    journal = {IEEE Robotics and Automation Letters},
+    month = {nov},
+    number = {11},
+    pages = {10399--10406},
+    title = {{CLIP-Clique: Graph-Based Correspondence Matching Augmented by Vision Language Models for Object-Based Global Localization}},
+    url = {https://ieeexplore.ieee.org/document/10705086/},
+    volume = {9},
+    year = {2024}
+}</code></pre>
+        </section>
+
+        <div class="section">
+            <h2>Notification</h2>
+            <hr>
+            <p> The project page was solely developed for and published as part of the publication, titled
+                ``<i>CLIP-Clique: Graph-Based Correspondence Matching Augmented by Vision Language Models for
+                    Object-Based Global Localization</i>'' for its
+                visualization.
+                We do not ensure the future maintenance and monitoring of this page.</p>
+            <p> Contents might be updated or deleted without notice regarding the original manuscript update and policy
+                change. </p>
+            <p>This webpage template was adapted from <a
+                    href='https://woven-planet.github.io/DiffusionNOCS/'>DiffusionNOCS</a> -- we thank Takuya Ikeda for
+                additional support and making their source available.</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
